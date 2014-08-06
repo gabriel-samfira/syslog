@@ -32,9 +32,9 @@ func localSyslog() (conn serverConn, err error) {
 }
 
 func dial(network, address string, tlsCfg *tls.Config) (net.Conn, error) {
-	if tlsCfg == nil {
-		return net.Dial(network, address)
-	} else {
+	if tlsCfg != nil && network == "tcp" {
 		return tls.Dial(network, address, tlsCfg)
+	} else {
+		return net.Dial(network, address)
 	}
 }

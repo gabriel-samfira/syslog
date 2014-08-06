@@ -17,6 +17,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"os"
@@ -92,6 +93,8 @@ type Writer struct {
 	mu   sync.Mutex // guards conn
 	conn serverConn
 }
+
+var _ io.Writer = (*Writer)(nil)
 
 // This interface and the separate syslog_unix.go file exist for
 // Solaris support as implemented by gccgo.  On Solaris you can not

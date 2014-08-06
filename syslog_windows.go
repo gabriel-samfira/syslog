@@ -21,9 +21,9 @@ func dial(network, address string, tlsCfg *tls.Config) (net.Conn, error) {
 	if network != "tcp" && network != "udp" {
 		return nil, errors.New("Invalid protocol. Windows supports tcp and udp")
 	}
-	if tlsCfg == nil {
-		return net.Dial(network, address)
-	} else {
+	if tlsCfg != nil && network == "tcp" {
 		return tls.Dial(network, address, tlsCfg)
+	} else {
+		return net.Dial(network, address)
 	}
 }
